@@ -1,14 +1,13 @@
-<script>
+<script lang="js">
     import { onMount } from 'svelte';
 
     let pins = [
-        { id: 'livingroom', lastRefresh: 'N/A', temp: 'N/A', hum: 'N/A' },
-        { id: 'cellar', lastRefresh: 'N/A', temp: 'N/A', hum: 'N/A' },
-        { id: 'garage', lastRefresh: 'N/A', temp: 'N/A', hum: 'N/A' },
-        { id: 'kitchen', lastRefresh: 'N/A', temp: 'N/A', hum: 'N/A' },
-        { id: 'bedroom1', lastRefresh: 'N/A', temp: 'N/A', hum: 'N/A' },
-        { id: 'bedroom2', lastRefresh: 'N/A', temp: 'N/A', hum: 'N/A' },
-        { id: 'office', lastRefresh: 'N/A', temp: 'N/A', hum: 'N/A' }
+        { id: 'livingroom', lastRefresh: 'N/A', temp: 'N/A', hum: 'N/A', x: '24%', y: '16%' },
+        { id: 'cellar', lastRefresh: 'N/A', temp: 'N/A', hum: 'N/A', x: '13%', y: '52%' },
+        { id: 'kitchen', lastRefresh: 'N/A', temp: 'N/A', hum: 'N/A', x: '41%', y: '51%' },
+        { id: 'bedroom1', lastRefresh: 'N/A', temp: 'N/A', hum: 'N/A', x: '63%', y: '14%' },
+        { id: 'bedroom2', lastRefresh: 'N/A', temp: 'N/A', hum: 'N/A', x: '87%', y: '14%' },
+        { id: 'office', lastRefresh: 'N/A', temp: 'N/A', hum: 'N/A', x: '69%', y: '48%' }
     ];
 
     onMount(() => {
@@ -50,55 +49,16 @@
 <main>
     <div class="image-container" style="position: relative; display: inline-block;">
         <img src="/Plan.png" alt="Plan" />
-        <div id="livingroom" class="pin" style="position: absolute; left: 24%; top: 16%; transform: translate(-50%, -50%)">
-            <p style="color: {isOlderThan5Minutes(pins.find(p => p.id === 'livingroom')?.lastRefresh) ? 'red' : 'blue'}">
-                {pins.find(p => p.id === 'livingroom')?.temp}°C
-            </p>
-            <p style="color: {isOlderThan5Minutes(pins.find(p => p.id === 'livingroom')?.lastRefresh) ? 'red' : 'blue'}">
-                {pins.find(p => p.id === 'livingroom')?.hum}%
-            </p>
-        </div>
-        <div id="cellar" class="pin" style="position: absolute; left: 13%; top: 52%; transform: translate(-50%, -50%)">
-            <p style="color: {isOlderThan5Minutes(pins.find(p => p.id === 'cellar')?.lastRefresh) ? 'red' : 'blue'}">
-                {pins.find(p => p.id === 'cellar')?.temp}°C
-            </p>
-            <p style="color: {isOlderThan5Minutes(pins.find(p => p.id === 'cellar')?.lastRefresh) ? 'red' : 'blue'}">
-                {pins.find(p => p.id === 'cellar')?.hum}%
-            </p>
-        </div>
-        <div id="kitchen" class="pin" style="position: absolute; left: 41%; top: 51%; transform: translate(-50%, -50%);">
-            <p style="color: {isOlderThan5Minutes(pins.find(p => p.id === 'kitchen')?.lastRefresh) ? 'red' : 'blue'}">
-                {pins.find(p => p.id === 'kitchen')?.temp}°C
-            </p>
-            <p style="color: {isOlderThan5Minutes(pins.find(p => p.id === 'kitchen')?.lastRefresh) ? 'red' : 'blue'}">
-                {pins.find(p => p.id === 'kitchen')?.hum}%
-            </p>
-        </div>
-
-        <div id="bedroom1" class="pin" style="position: absolute; left: 63%; top: 14%; transform: translate(-50%, -50%);">
-            <p style="color: {isOlderThan5Minutes(pins.find(p => p.id === 'bedroom1')?.lastRefresh) ? 'red' : 'blue'}">
-                {pins.find(p => p.id === 'bedroom1')?.temp}°C
-            </p>
-            <p style="color: {isOlderThan5Minutes(pins.find(p => p.id === 'bedroom1')?.lastRefresh) ? 'red' : 'blue'}">
-                {pins.find(p => p.id === 'bedroom1')?.hum}%
-            </p>
-        </div>
-        <div id="bedroom2" class="pin" style="position: absolute; left: 87%; top: 14%; transform: translate(-50%, -50%);">
-            <p style="color: {isOlderThan5Minutes(pins.find(p => p.id === 'bedroom2')?.lastRefresh) ? 'red' : 'blue'}">
-                {pins.find(p => p.id === 'bedroom2')?.temp}°C
-            </p>
-            <p style="color: {isOlderThan5Minutes(pins.find(p => p.id === 'bedroom2')?.lastRefresh) ? 'red' : 'blue'}">
-                {pins.find(p => p.id === 'bedroom2')?.hum}%
-            </p>
-        </div>
-        <div id="office" class="pin" style="position: absolute; left: 69%; top: 48%; transform: translate(-50%, -50%);">
-            <p style="color: {isOlderThan5Minutes(pins.find(p => p.id === 'office')?.lastRefresh) ? 'red' : 'blue'}">
-                {pins.find(p => p.id === 'office')?.temp}°C
-            </p>
-            <p style="color: {isOlderThan5Minutes(pins.find(p => p.id === 'office')?.lastRefresh) ? 'red' : 'blue'}">
-                {pins.find(p => p.id === 'office')?.hum}%
-            </p>
-        </div>
+        {#each pins as pin}
+            <div id="{pin.id}" class="pin" style="position: absolute; left: {pin.x}; top: {pin.y}; transform: translate(-50%, -50%);">
+                <p style="color: {isOlderThan5Minutes(pin.lastRefresh) ? 'red' : 'blue'}">
+                    {pin.temp}°C
+                </p>
+                <p style="color: {isOlderThan5Minutes(pin.lastRefresh) ? 'red' : 'blue'}">
+                    {pin.hum}%
+                </p>
+            </div>
+        {/each}
     </div>
 </main>
 
